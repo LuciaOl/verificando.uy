@@ -22,7 +22,7 @@ public class IduyController {
         this.clientRegistrationRepository = clientRegistrationRepository;
     }
 
-    // Iniciar el flujo de autenticación
+
     @GetMapping("/login")
     public RedirectView login() {
         ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId("iduruguay");
@@ -35,12 +35,20 @@ public class IduyController {
         Map<String, Object> userInfo = new HashMap<>();
 
         if (oidcUser != null) {
+            // Información estándar del usuario
             userInfo.put("name", oidcUser.getFullName());
             userInfo.put("email", oidcUser.getEmail());
 
+           
+            userInfo.put("nombre_completo", oidcUser.getAttribute("nombre_completo"));
+            userInfo.put("primer_nombre", oidcUser.getAttribute("primer_nombre"));
+            userInfo.put("primer_apellido", oidcUser.getAttribute("primer_apellido"));
+            userInfo.put("uid", oidcUser.getAttribute("uid"));
+
+            // Todos los atributos
             userInfo.put("attributes", oidcUser.getAttributes());
         }
 
-        return userInfo; // Devolver la información del usuario como JSON
+        return userInfo;
     }
 }

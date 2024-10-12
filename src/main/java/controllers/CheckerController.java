@@ -12,6 +12,9 @@ public class CheckerController extends UsuarioController {
 
     // Métodos específicos para los checkers
 
+
+
+
     @PostMapping("/verificar-hecho")
     public Verificacion verificarHecho(@RequestBody Hecho hecho, @RequestParam boolean esVerdadero, @RequestParam String justificacion) {
         // Generar un ID único para la verificación (puedes usar UUID o un generador de IDs)

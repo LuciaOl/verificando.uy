@@ -1,29 +1,45 @@
 package model;
 
+import enums.Status;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static enums.Status.PENDIENTE;
 
 // Atributos: factID, description, category, status, ratings, justifications
 // Descripción: Un hecho es la información que se somete a verificación. Cada hecho tiene una descripción,
 // una categoría (como salud, política o economía), un estado (verificado, pendiente o rechazado),
 // y recibe calificaciones y justificaciones de los verificadores.
-
+@Entity
 public class Hecho {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String factID;
     private String description;
     private String category;
-    private String status; // Verificado, Pendiente, Rechazado
+    private Status status; // Verificado, Pendiente, Rechazado
     private List<Double> ratings;
     private List<String> justifications;
 
+
+
+    @OneToMany
+    private List<Verificacion> verificacions;
+
     // Constructor
-    public Hecho(String factID, String description, String category) {
-        this.factID = factID;
+    public Hecho(String description, String category) {
         this.description = description;
         this.category = category;
-        this.status = "Pendiente";
+        this.status = PENDIENTE;
         this.ratings = new ArrayList<>();
         this.justifications = new ArrayList<>();
+        this.verificacions = new ArrayList<>();
+    }
+
+    public Hecho() {
+
     }
 
     // Getters y Setters
@@ -51,11 +67,11 @@ public class Hecho {
         this.category = category;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -94,18 +110,6 @@ public class Hecho {
         return sum / this.ratings.size();
     }
 
-    public void verifyFact() {
-        this.status = "Verificado";
-    }
-
-    public void rejectFact() {
-        this.status = "Rechazado";
-    }
-
-    public void resetFact() {
-        this.status = "Pendiente";
-    }
-
     public void clearRatings() {
         this.ratings.clear();
     }
@@ -114,10 +118,17 @@ public class Hecho {
         this.justifications.clear();
     }
 
-    public void clearAll() {
-        this.status = "Pendiente";
-        this.ratings.clear();
-        this.justifications.clear();
+
+    public List<Verificacion> getVerificacions() {
+        return verificacions;
+    }
+
+    public void setVerificacions(List<Verificacion> verificacions) {
+        this.verificacions = verificacions;
+    }
+
+    public void addVerification(Verificacion verificacion){
+        this.verificacions.add(verificacion);
     }
 
     @Override
@@ -141,4 +152,5 @@ public class Hecho {
     public int hashCode() {
         return this.factID.hashCode();
     }
+
 }

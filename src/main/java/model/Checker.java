@@ -1,11 +1,16 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Descripción: Los verificadores son responsables de evaluar y
 // calificar los hechos presentados. Pueden consultar diferentes fuentes y nodos periféricos para obtener información adicional
 // que ayude en la verificación.
+@Entity
+@PrimaryKeyJoinColumn(name = "id_usuario")
 public class Checker extends Usuario {
     private List<String> assignedFacts;
     private List<String> factsHistory;
@@ -15,6 +20,10 @@ public class Checker extends Usuario {
         super(userID, fullName, email, role);
         this.assignedFacts = new ArrayList<>();
         this.factsHistory = new ArrayList<>();
+    }
+
+    public Checker() {
+
     }
 
     // Getters and Setters

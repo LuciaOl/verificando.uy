@@ -1,9 +1,23 @@
 package model;
 
+
+import java.util.Date;
+
+import jakarta.persistence.*;
+
+@Entity
 public class Notificacion {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "citizen_id")
+    private Citizen citizen;
+
     private String mensaje;
-    private String tipo;
+    private Date fecha;
 
     // Getters y setters
     public Long getId() {
@@ -14,6 +28,14 @@ public class Notificacion {
         this.id = id;
     }
 
+    public Citizen getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(Citizen citizen) {
+        this.citizen = citizen;
+    }
+
     public String getMensaje() {
         return mensaje;
     }
@@ -22,31 +44,12 @@ public class Notificacion {
         this.mensaje = mensaje;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Notificacion{" +
-                "id=" + id +
-                ", mensaje='" + mensaje + '\'' +
-                ", tipo='" + tipo + '\'' +
-                '}';
-    }
-
-    // equals y hashCode
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Notificacion)) return false;
-        Notificacion notificacion = (Notificacion) o;
-        return id.equals(notificacion.id);
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     @Override

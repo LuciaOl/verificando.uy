@@ -1,11 +1,16 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Descripción: Los remitentes están encargados de seleccionar y presentar hechos para verificación.
 // Estos hechos pueden provenir de sugerencias de ciudadanos o de mecanismos automáticos.
 // Los remitentes gestionan una lista de hechos que han presentado.
+@Entity
+@PrimaryKeyJoinColumn(name = "id_usuario")
 public class Submitter extends Usuario {
     private String organizationName;
     private List<String> submittedFacts;
@@ -15,6 +20,10 @@ public class Submitter extends Usuario {
         super(userID, fullName, email, role);
         this.organizationName = organizationName;
         this.submittedFacts = new ArrayList<>();
+    }
+
+    public Submitter() {
+
     }
 
     // Getters and Setters

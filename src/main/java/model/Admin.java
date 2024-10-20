@@ -1,10 +1,15 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jdk.jfr.Enabled;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //Descripción: Los administradores tienen la capacidad de configurar la plataforma, gestionar usuarios y supervisar el proceso de verificación de hechos.
-
+@Entity
+@PrimaryKeyJoinColumn(name = "id_usuario")
 public class Admin extends Usuario {
     private List<Usuario> managedUsers;
 
@@ -12,6 +17,10 @@ public class Admin extends Usuario {
     public Admin(String userID, String fullName, String email, String role) {
         super(userID, fullName, email, role);
         this.managedUsers = new ArrayList<>();
+    }
+
+    public Admin() {
+
     }
 
     // Getters and Setters

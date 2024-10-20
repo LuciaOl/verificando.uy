@@ -1,43 +1,14 @@
-package model;
+package dtos;
 
-import jakarta.persistence.*;
+import model.Hecho;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class Verificacion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id; // Identificador de la verificación
-    @ManyToOne
-    @JoinColumn(name = "hecho_fact_id")
+public class DtVerificacion {
     private Hecho hecho; // El hecho que se está verificando
     private boolean esVerdadero; // Resultado de la verificación
     private String justificacion; // Justificación del verificador
-    private LocalDateTime fechaVerificacion; // Fecha y hora de la verificación
-
-    // Constructor
-    public Verificacion(Hecho hecho, boolean esVerdadero, String justificacion) {
-        this.hecho = hecho;
-        this.esVerdadero = esVerdadero;
-        this.justificacion = justificacion;
-        this.fechaVerificacion = LocalDateTime.now(); // Fecha de verificación actual
-    }
-
-
-
-    public Verificacion() {
-
-    }
-
-    // Getters y Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private LocalDateTime fechaVerificacion;
 
     public Hecho getHecho() {
         return hecho;
@@ -47,7 +18,7 @@ public class Verificacion {
         this.hecho = hecho;
     }
 
-    public boolean isEsVerdadero() {
+    public boolean esVerdadero() {
         return esVerdadero;
     }
 

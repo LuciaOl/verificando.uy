@@ -1,6 +1,14 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
+    @Id
     private String userID;
     private String fullName;
     private String email;
@@ -51,4 +59,5 @@ public class Usuario {
     public void setRole(String role) {
         this.role = role;
     }
+
 }

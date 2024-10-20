@@ -8,7 +8,7 @@ import java.util.List;
 
 import static verificando.uy.enums.Status.PENDIENTE;
 
-// Atributos: factID, description, category, status, ratings, justifications
+// Atributos: id, description, category, status, ratings, justifications
 // Descripción: Un hecho es la información que se somete a verificación. Cada hecho tiene una descripción,
 // una categoría (como salud, política o economía), un estado (verificado, pendiente o rechazado),
 // y recibe calificaciones y justificaciones de los verificadores.
@@ -16,19 +16,22 @@ import static verificando.uy.enums.Status.PENDIENTE;
 public class Hecho {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long factID;
+    @Column(name = "id_hecho")
+    private Long id;
     private String description;
     private String category;
     private Status status; // Verificado, Pendiente, Rechazado
     @ElementCollection
+    @CollectionTable(name = "rating", joinColumns = @JoinColumn(name = "id_hecho"))
     private List<Double> ratings;
+
     @ElementCollection
+    @CollectionTable(name = "justification", joinColumns = @JoinColumn(name = "id_hecho"))
     private List<String> justifications;
 
-
-
-    @OneToMany
+    @OneToMany(mappedBy = "hecho", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Verificacion> verificacions;
+
 
     // Constructor
     public Hecho(String description, String category) {
@@ -45,12 +48,12 @@ public class Hecho {
     }
 
     // Getters y Setters
-    public Long getFactID() {
-        return factID;
+    public Long getid() {
+        return id;
     }
 
-    public void setFactID(Long factID) {
-        this.factID = factID;
+    public void setid(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -135,7 +138,7 @@ public class Hecho {
 
     @Override
     public String toString() {
-        return "ID: " + this.factID + "\nDescripción: " + this.description + "\nCategoría: " + this.category + "\nEstado: " + this.status + "\nCalificaciones: " + this.ratings + "\nJustificaciones: " + this.justifications;
+        return "ID: " + this.id + "\nDescripción: " + this.description + "\nCategoría: " + this.category + "\nEstado: " + this.status + "\nCalificaciones: " + this.ratings + "\nJustificaciones: " + this.justifications;
     }
 
     @Override
@@ -147,12 +150,12 @@ public class Hecho {
             return false;
         }
         Hecho hecho = (Hecho) obj;
-        return hecho.factID.equals(this.factID);
+        return hecho.id.equals(this.id);
     }
 
     @Override
     public int hashCode() {
-        return this.factID.hashCode();
+        return this.id.hashCode();
     }
 
 }

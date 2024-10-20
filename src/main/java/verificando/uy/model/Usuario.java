@@ -8,7 +8,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private Long userID;
+    private Long id;
     private String fullName;
     private String email;
     private String role;
@@ -23,12 +23,12 @@ public class Usuario {
     }
 
     // Getters y Setters
-    public Long getUserID() {
-        return userID;
+    public Long getid() {
+        return id;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setid(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {

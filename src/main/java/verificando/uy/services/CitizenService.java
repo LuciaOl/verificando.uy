@@ -2,9 +2,12 @@ package verificando.uy.services;
 
 import verificando.uy.model.Citizen;
 import org.springframework.stereotype.Service;
+import verificando.uy.model.Hecho;
 import verificando.uy.repositories.CitizenRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CitizenService {
 
@@ -14,7 +17,7 @@ public class CitizenService {
         this.citizenRepository = citizenRepository;
     }
 
-    public List<Citizen> obtenerSuscriptores(String factID) {
-        return citizenRepository.findSuscriptores(factID);
+    public List<Citizen> obtenerSuscriptores(Hecho hecho) {
+        return citizenRepository.findBySubscriptionsContaining(hecho);
     }
 }

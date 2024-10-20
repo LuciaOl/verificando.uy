@@ -31,23 +31,26 @@ public class HechoController {
         return hechoService.crearHecho(hecho.getDescription(), hecho.getCategory());
     }
 
-    @GetMapping("/{factID}")
-    public Hecho obtenerHecho(@PathVariable String factID) {
-        Optional<Hecho> hecho = hechoService.obtenerHecho(factID);
+    @GetMapping("/{id}")
+    public Hecho obtenerHecho(@PathVariable String id) {
+        Optional<Hecho> hecho = hechoService.obtenerHecho(id);
         return hecho.orElse(null); // Retorna null si no se encuentra el hecho
     }
 
     // este NO verifica el hecho, SOLO actualiza info que ya este
-    @PutMapping("/{factID}")
-    public Hecho actualizarHecho(@PathVariable String factID, @RequestBody DtHecho hecho) {
-        Optional<Hecho> hechoActualizado = hechoService.actualizarHecho(factID, hecho);
+    @PutMapping("/{id}")
+    public Hecho actualizarHecho(@PathVariable String id, @RequestBody DtHecho hecho) {
+        Optional<Hecho> hechoActualizado = hechoService.actualizarHecho(id, hecho);
         return hechoActualizado.orElse(null); // Retorna null si no se encuentra el hecho
     }
 
-    @PutMapping("/{factID}/verificar")
-    public Hecho verificarHecho(@PathVariable String factID, @RequestBody DtVerificacion verificacion) {
-        Optional<Hecho> hechoVerificado = hechoService.verificarHecho(factID, verificacion);
-        List<Citizen> suscriptores = citizenService.obtenerSuscriptores(factID);
+    @PutMapping("/{id}/verificar")
+    public Hecho verificarHecho(@PathVariable String id, @RequestBody DtVerificacion verificacion) {
+        Optional<Hecho> hechoVerificado = hechoService.verificarHecho(id, verificacion);
+        if (hechoVerificado.isEmpty()) {
+            return null;
+        }
+        List<Citizen> suscriptores = citizenService.obtenerSuscriptores(hechoVerificado.get());
         // Notificar a los suscriptores
         suscriptores.forEach(suscriptor -> {
             notificationService.enviarNotificacionPush(suscriptor, hechoVerificado.get());

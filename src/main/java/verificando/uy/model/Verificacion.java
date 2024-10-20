@@ -10,8 +10,8 @@ public class Verificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Identificador de la verificación
     @ManyToOne
-    @JoinColumn(name = "hecho_fact_id")
-    private Hecho hecho; // El hecho que se está verificando
+    @JoinColumn(name = "id_hecho")
+    private Hecho hecho;
     private boolean esVerdadero; // Resultado de la verificación
     private String justificacion; // Justificación del verificador
     private LocalDateTime fechaVerificacion; // Fecha y hora de la verificación

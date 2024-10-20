@@ -3,12 +3,10 @@ package verificando.uy.services;
 import verificando.uy.model.Citizen;
 import verificando.uy.model.Hecho;
 import net.minidev.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import verificando.uy.repositories.CitizenRepository;
 
 @Service
 public class NotificationService {
@@ -17,12 +15,6 @@ public class NotificationService {
     private String expoNotificationUrl;
     @Value("${app.firebase.server-key}")
     private String serverKey;
-    @Autowired
-    private CitizenRepository citizenRepository;
-
-    public NotificationService(CitizenRepository citizenRepository) {
-        this.citizenRepository = citizenRepository;
-    }
 
 
     // Método para enviar notificación push a un ciudadano

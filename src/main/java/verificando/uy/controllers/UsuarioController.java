@@ -40,7 +40,7 @@ public class UsuarioController {
     // Método para agregar usuarios (solo para demostración)
     @PostMapping
     public Usuario agregarUsuario(@RequestBody Usuario usuario) {
-        usuarios.put(Long.valueOf(usuario.getUserID()), usuario); // Simular la adición del usuario
+        usuarios.put(Long.valueOf(usuario.getid()), usuario); // Simular la adición del usuario
         return usuario;
     }
 }

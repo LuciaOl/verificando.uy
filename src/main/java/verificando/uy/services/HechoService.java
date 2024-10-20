@@ -24,13 +24,13 @@ public class HechoService {
         return hecho;
     }
 
-    public Optional<Hecho> obtenerHecho(String factID) {
+    public Optional<Hecho> obtenerHecho(String id) {
         // Buscar un hecho por su ID
-        return this.hechoRepository.findById(factID);
+        return this.hechoRepository.findById(id);
     }
 
-    public Optional<Hecho> actualizarHecho(String factID, DtHecho hechoActualizado) {
-        Hecho hecho = this.hechoRepository.findById(factID).orElse(null);
+    public Optional<Hecho> actualizarHecho(String id, DtHecho hechoActualizado) {
+        Hecho hecho = this.hechoRepository.findById(id).orElse(null);
         if (hecho == null) {
             return Optional.empty(); // Hecho no encontrado
         } else {
@@ -44,8 +44,8 @@ public class HechoService {
         }
     }
 
-    public Optional<Hecho> verificarHecho(String factID, DtVerificacion verificacion) {
-        Hecho hecho = this.hechoRepository.findById(factID).orElse(null);
+    public Optional<Hecho> verificarHecho(String id, DtVerificacion verificacion) {
+        Hecho hecho = this.hechoRepository.findById(id).orElse(null);
         if (hecho == null) {
             return Optional.empty(); // Hecho no encontrado
         } else {

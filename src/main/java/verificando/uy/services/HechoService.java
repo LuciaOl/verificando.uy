@@ -1,5 +1,6 @@
 package verificando.uy.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import verificando.uy.dtos.DtHecho;
 import verificando.uy.dtos.DtVerificacion;
 import verificando.uy.model.Verificacion;
@@ -18,18 +19,24 @@ public class HechoService {
 
     private VerificacionService verificacionService;
 
+    @Autowired
+    public HechoService(HechoRepository hechoRepository, VerificacionService verificacionService) {
+        this.hechoRepository = hechoRepository;
+        this.verificacionService = verificacionService;
+    }
+
     public Hecho crearHecho(String description, String category) {
         Hecho hecho = new Hecho(description, category);
         hechoRepository.save(hecho); // Guardar el hecho en la "base de datos"
         return hecho;
     }
 
-    public Optional<Hecho> obtenerHecho(String id) {
+    public Optional<Hecho> obtenerHecho(Long id) {
         // Buscar un hecho por su ID
         return this.hechoRepository.findById(id);
     }
 
-    public Optional<Hecho> actualizarHecho(String id, DtHecho hechoActualizado) {
+    public Optional<Hecho> actualizarHecho(Long id, DtHecho hechoActualizado) {
         Hecho hecho = this.hechoRepository.findById(id).orElse(null);
         if (hecho == null) {
             return Optional.empty(); // Hecho no encontrado
@@ -44,7 +51,7 @@ public class HechoService {
         }
     }
 
-    public Optional<Hecho> verificarHecho(String id, DtVerificacion verificacion) {
+    public Optional<Hecho> verificarHecho(Long id, DtVerificacion verificacion) {
         Hecho hecho = this.hechoRepository.findById(id).orElse(null);
         if (hecho == null) {
             return Optional.empty(); // Hecho no encontrado

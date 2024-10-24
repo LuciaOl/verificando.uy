@@ -22,8 +22,10 @@ public class HechoController {
 
     private NotificationService notificationService;
 
-    public HechoController(HechoService hechoService) {
+    public HechoController(HechoService hechoService, CitizenService citizenService, NotificationService notificationService) {
         this.hechoService = hechoService;
+        this.citizenService = citizenService;
+        this.notificationService = notificationService;
     }
 
     @PostMapping("/crear")
@@ -32,20 +34,20 @@ public class HechoController {
     }
 
     @GetMapping("/{id}")
-    public Hecho obtenerHecho(@PathVariable String id) {
+    public Hecho obtenerHecho(@PathVariable Long id) {
         Optional<Hecho> hecho = hechoService.obtenerHecho(id);
         return hecho.orElse(null); // Retorna null si no se encuentra el hecho
     }
 
     // este NO verifica el hecho, SOLO actualiza info que ya este
     @PutMapping("/{id}")
-    public Hecho actualizarHecho(@PathVariable String id, @RequestBody DtHecho hecho) {
+    public Hecho actualizarHecho(@PathVariable Long id, @RequestBody DtHecho hecho) {
         Optional<Hecho> hechoActualizado = hechoService.actualizarHecho(id, hecho);
         return hechoActualizado.orElse(null); // Retorna null si no se encuentra el hecho
     }
 
     @PutMapping("/{id}/verificar")
-    public Hecho verificarHecho(@PathVariable String id, @RequestBody DtVerificacion verificacion) {
+    public Hecho verificarHecho(@PathVariable Long id, @RequestBody DtVerificacion verificacion) {
         Optional<Hecho> hechoVerificado = hechoService.verificarHecho(id, verificacion);
         if (hechoVerificado.isEmpty()) {
             return null;

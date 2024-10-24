@@ -10,6 +10,7 @@ import verificando.uy.verificando.repositories.PeripheralNodeRepository;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Optional;
 
 @Service
 public class PeripheralNodeService {
@@ -53,5 +54,14 @@ public class PeripheralNodeService {
         node.setActive(true); // Queda activo si la validación es exitosa
 
         return peripheralNodeRepository.save(node);
+    }
+    // Método para obtener un nodo periférico por ID
+    public PeripheralNode obtenerNodoPerifericoPorId(Long id) throws Exception {
+        Optional<PeripheralNode> nodo = peripheralNodeRepository.findById(id);
+        if (nodo.isPresent()) {
+            return nodo.get();
+        } else {
+            throw new Exception("Nodo periférico no encontrado.");
+        }
     }
 }

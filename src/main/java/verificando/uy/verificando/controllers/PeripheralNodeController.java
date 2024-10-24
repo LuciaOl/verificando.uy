@@ -26,4 +26,13 @@ public class PeripheralNodeController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public PeripheralNode obtenerNodoPerifericoPorId(@PathVariable Long id) {
+        try {
+            return peripheralNodeService.obtenerNodoPerifericoPorId(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 }

@@ -1,7 +1,7 @@
-package services;
+package verificando.uy.verificando.services;
 
 import org.springframework.stereotype.Service;
-import model.Usuario;
+import verificando.uy.verificando.model.Usuario;
 
 @Service
 public class UsuarioService {

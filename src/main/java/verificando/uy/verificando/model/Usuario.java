@@ -1,6 +1,11 @@
-package model;
+package verificando.uy.verificando.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario {
+    @Id
     private String userID;
     private String fullName;
     private String email;

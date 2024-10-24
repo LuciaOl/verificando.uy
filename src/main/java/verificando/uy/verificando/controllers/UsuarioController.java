@@ -1,6 +1,6 @@
-package controllers;
+package verificando.uy.verificando.controllers;
 
-import model.Usuario;
+import verificando.uy.verificando.model.Usuario;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;

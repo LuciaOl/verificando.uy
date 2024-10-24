@@ -1,6 +1,6 @@
-package controllers;
+package verificando.uy.verificando.controllers;
 
-import model.Hecho;
+import verificando.uy.verificando.model.Hecho;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

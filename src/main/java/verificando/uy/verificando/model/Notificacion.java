@@ -1,4 +1,4 @@
-package model;
+package verificando.uy.verificando.model;
 
 public class Notificacion {
     private Long id;

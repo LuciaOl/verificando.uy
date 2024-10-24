@@ -7,10 +7,11 @@ import verificando.uy.services.PeripheralNodeService;
 
 @SpringBootTest
 class VerificandoApplicationTests {
+	@MockBean
+	private PeripheralNodeService peripheralNodeService;
 
 	@Test
 	void contextLoads() {
 	}
-	@MockBean
-	private PeripheralNodeService peripheralNodeService;
+
 }

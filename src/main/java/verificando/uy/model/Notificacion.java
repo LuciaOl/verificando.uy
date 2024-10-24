@@ -56,4 +56,14 @@ public class Notificacion {
     public int hashCode() {
         return id.hashCode();
     }
+
+
+    // equals y hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Notificacion)) return false;
+        Notificacion notificacion = (Notificacion) o;
+        return id.equals(notificacion.id);
+    }
 }

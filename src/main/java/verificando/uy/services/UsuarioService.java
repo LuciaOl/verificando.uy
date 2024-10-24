@@ -3,6 +3,7 @@ package verificando.uy.services;
 import org.springframework.stereotype.Service;
 import verificando.uy.model.Usuario;
 
+
 @Service
 public class UsuarioService {
 

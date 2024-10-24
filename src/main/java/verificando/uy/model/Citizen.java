@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-
 import java.util.ArrayList;
 import java.util.List;
 

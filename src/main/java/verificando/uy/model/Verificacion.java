@@ -1,7 +1,5 @@
 package verificando.uy.model;
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,8 +21,6 @@ public class Verificacion {
         this.justificacion = justificacion;
         this.fechaVerificacion = LocalDateTime.now(); // Fecha de verificación actual
     }
-
-
 
     public Verificacion() {
 

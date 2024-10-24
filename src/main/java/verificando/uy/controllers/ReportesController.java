@@ -1,5 +1,4 @@
 package verificando.uy.controllers;
-
 import org.springframework.web.bind.annotation.*;
 
 @RestController

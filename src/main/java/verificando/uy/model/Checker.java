@@ -3,7 +3,7 @@ package verificando.uy.model;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-
+import verificando.uy.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 

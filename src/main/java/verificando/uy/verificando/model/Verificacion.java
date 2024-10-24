@@ -1,4 +1,4 @@
-package model;
+package verificando.uy.verificando.model;
 
 import java.time.LocalDateTime;
 

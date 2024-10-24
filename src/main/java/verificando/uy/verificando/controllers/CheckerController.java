@@ -1,7 +1,7 @@
-package controllers;
+package verificando.uy.verificando.controllers;
 
-import model.Hecho;
-import model.Verificacion;
+import verificando.uy.verificando.model.Hecho;
+import verificando.uy.verificando.model.Verificacion;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

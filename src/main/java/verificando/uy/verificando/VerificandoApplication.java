@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-@ComponentScan(basePackages = "controllers")
+@ComponentScan(basePackages = {"verificando.uy.verificando.controllers", "verificando.uy.verificando.services", "verificando.uy.verificando.repositories"})
 public class VerificandoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VerificandoApplication.class, args);
 	}
-
 }

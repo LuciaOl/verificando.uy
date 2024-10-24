@@ -1,21 +1,25 @@
-package services;
+package verificando.uy.verificando.services;
 
-import dto.PeripheralNodeRequest;
-import model.PeripheralNode;
+import verificando.uy.verificando.dto.PeripheralNodeRequest;
+import verificando.uy.verificando.model.PeripheralNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.PeripheralNodeRepository;
+import verificando.uy.verificando.repositories.PeripheralNodeRepository;
+
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Optional;
 
 @Service
 public class PeripheralNodeService {
 
+    private final PeripheralNodeRepository peripheralNodeRepository;
+
     @Autowired
-    private PeripheralNodeRepository peripheralNodeRepository;
+    public PeripheralNodeService(PeripheralNodeRepository peripheralNodeRepository) {
+        this.peripheralNodeRepository = peripheralNodeRepository;
+    }
 
     // Método para validar conectividad
     private boolean validarConectividad(String url) {

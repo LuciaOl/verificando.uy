@@ -1,8 +1,8 @@
-package repositories;
+package verificando.uy.verificando.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import model.Usuario;
+import verificando.uy.verificando.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, String> {

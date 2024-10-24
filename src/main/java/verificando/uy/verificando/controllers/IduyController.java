@@ -1,4 +1,4 @@
-package controllers;
+package verificando.uy.verificando.controllers;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

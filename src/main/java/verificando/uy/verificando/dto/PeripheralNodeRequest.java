@@ -1,4 +1,4 @@
-package dto;
+package verificando.uy.verificando.dto;
 
 public class PeripheralNodeRequest {
     private String name;

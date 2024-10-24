@@ -1,12 +1,13 @@
-package controllers;
+package verificando.uy.verificando.controllers;
 
-import dto.PeripheralNodeRequest;
-import model.PeripheralNode;
+import verificando.uy.verificando.dto.PeripheralNodeRequest;
+import verificando.uy.verificando.model.PeripheralNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-import services.PeripheralNodeService;
+import verificando.uy.verificando.services.PeripheralNodeService;
+
 
 
 @RestController

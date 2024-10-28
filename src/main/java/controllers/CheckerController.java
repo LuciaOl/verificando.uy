@@ -4,15 +4,26 @@ import model.Hecho;
 import model.Verificacion;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/checker")
 public class CheckerController extends UsuarioController {
+    private final HechoController hechoController;
+
+    public CheckerController(HechoController hechoController) {
+        this.hechoController = hechoController;
+    }
+
 
     // Métodos específicos para los checkers
 
-
+    @GetMapping("/listaHechosEnProceso")
+    public Optional<List<Hecho>> HechosEnProceso(){
+        return hechoController.obtenerHechosEnProceso();
+    }
 
 
     @PostMapping("/verificar-hecho")

@@ -21,6 +21,10 @@ public class HechoService {
         return hechos.stream().filter(h -> h.getFactID().equals(factID)).findFirst();
     }
 
+    public Optional<List<Hecho>> obtenerTodosLosHechos(){
+        return Optional.of(hechos.stream().toList());
+    }
+
     public Optional<Hecho> actualizarHecho(String factID, Hecho hechoActualizado) {
         for (int i = 0; i < hechos.size(); i++) {
             Hecho hecho = hechos.get(i);

@@ -2,9 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
-	id("com.github.ben-manes.versions") version "0.47.0"
 }
-
 
 group = "verificando.uy"
 version = "0.0.1-SNAPSHOT"
@@ -23,6 +21,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-web-services")
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-couchbase")
@@ -43,6 +42,3 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
-
-
-

@@ -24,12 +24,8 @@ public class ReportesService {
         this.hechoRepository = hechoRepository;
     }
     
+
     public List<Hecho> obtenerHechosEntreFechas(LocalDateTime desde, LocalDateTime hasta) {
-    	List<Hecho> hechos = this.hechoRepository.getHechos();
-    	return hechos.stream()
-                .filter(hecho -> hecho.getFechaCreacion() != null && 
-                !hecho.getFechaCreacion().isBefore(desde) && 
-                !hecho.getFechaCreacion().isAfter(hasta))
-            	.collect(Collectors.toList());
+        return hechoRepository.findHechosBetweenDates(desde, hasta);
     }
 }

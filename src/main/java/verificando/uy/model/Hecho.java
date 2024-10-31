@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
 
 import static verificando.uy.enums.Status.PENDIENTE;
 
@@ -18,6 +19,7 @@ public class Hecho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_hecho")
     private Long id;
+    private LocalDateTime fechaCreacion;
     private String description;
     private String category;
     private Status status; // Verificado, Pendiente, Rechazado
@@ -35,6 +37,7 @@ public class Hecho {
 
     // Constructor
     public Hecho(String description, String category) {
+    	this.fechaCreacion = LocalDateTime.now();
         this.description = description;
         this.category = category;
         this.status = PENDIENTE;
@@ -54,6 +57,14 @@ public class Hecho {
 
     public void setid(Long id) {
         this.id = id;
+    }
+    
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public String getDescription() {

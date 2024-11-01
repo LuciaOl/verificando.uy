@@ -12,11 +12,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface HechoRepository extends JpaRepository<Hecho, Long>  {
     public Optional<Hecho> findById(Long id);
-    public List<Hecho> getHechos();
 
 
         @Query("SELECT h FROM Hecho h WHERE h.fechaCreacion BETWEEN :desde AND :hasta")
         List<Hecho> findHechosBetweenDates(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
+
+        @Query("SELECT h FROM Hecho h")
+        List<Hecho> getHechos();
+
 
 
 }

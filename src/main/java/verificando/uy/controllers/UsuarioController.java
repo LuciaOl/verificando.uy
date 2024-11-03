@@ -1,14 +1,52 @@
 package verificando.uy.controllers;
 
 import verificando.uy.model.Usuario;
+import verificando.uy.repositories.UsuarioRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/usuarios")
+
 public class UsuarioController {
+
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    
+       
+    @GetMapping("/usuarios/{gubuy_cedula}")
+    public Usuario obtenerUsuarioGubuy(@PathVariable String gubuy_cedula) {
+        return usuarioRepository.findByCedula(gubuy_cedula);
+    }
+
+   @PostMapping("/guardar")
+   public Usuario guardarUsuario(@RequestBody Usuario usuario) {
+       return usuarioRepository.save(usuario); 
+   }
+
+   // Para futuro
+   @PutMapping("/actualizar-tokens/{gubuy_cedula}")
+   public Usuario actualizarTokens(
+           @PathVariable String gubuy_cedula,
+           @RequestParam String id_token,
+           @RequestParam String refresh_token) {
+       Usuario usuario = usuarioRepository.findByCedula(gubuy_cedula);
+       if (usuario != null) {
+           usuario.setId_token(id_token);
+           usuario.setRefresh_token(refresh_token);
+           return usuarioRepository.save(usuario); 
+       } else {
+           throw new RuntimeException("Usuario no encontrado");
+       }
+   }
+
+
+
+
 
     // Este mapa simula una base de datos para fines de demostración
     private Map<Long, Usuario> usuarios = new HashMap<>();
@@ -21,6 +59,7 @@ public class UsuarioController {
         // Lógica para obtener un usuario por ID
         return usuarios.get(id); // Devolver el usuario correspondiente
     }
+
 
     @PutMapping("/{id}")
     public Usuario actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
@@ -44,4 +83,6 @@ public class UsuarioController {
         usuarios.put(Long.valueOf(usuario.getid()), usuario); // Simular la adición del usuario
         return usuario;
     }
+
+
 }

@@ -12,6 +12,13 @@ public class Usuario {
     private String fullName;
     private String email;
     private String role;
+    @Column(name = "gubuy_cedula")
+    private String cedula;
+    @Column(name = "gubuy_id_token", length = 1024)    
+    private String id_token;
+    @Column(name = "gubuy_refresh_token", length = 1024)   
+    private String refresh_token;
+
 
     // Constructor
     public Usuario() {}
@@ -20,6 +27,15 @@ public class Usuario {
         this.fullName = fullName;
         this.email = email;
         this.role = role;
+    }
+
+    public Usuario(String fullName, String email, String role, String cedula, String id_token, String refresh_token) {
+        this.fullName = fullName;
+        this.email = email;
+        this.role = role;
+        this.cedula = cedula;
+        this.id_token = id_token;
+        this.refresh_token = refresh_token;
     }
 
     // Getters y Setters
@@ -33,6 +49,10 @@ public class Usuario {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getCedula() {
+        return cedula;
     }
 
     public void setFullName(String fullName) {
@@ -53,5 +73,25 @@ public class Usuario {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getId_token() {
+        return id_token;
+    }
+
+    public void setId_token(String id_token) {
+        this.id_token = id_token;
+    }
+
+    public String getRefresh_token() {
+        return refresh_token;
+    }
+
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
     }
 }

@@ -1,5 +1,6 @@
 package verificando.uy.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import verificando.uy.model.Usuario;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,6 +25,10 @@ import java.net.URISyntaxException;
 @RestController
 @RequestMapping("/")
 public class IduyController {
+
+  
+
+
 
     private static final String AUTHORIZATION_URI = "https://auth-testing.iduruguay.gub.uy/oidc/v1/authorize";
     private static final String TOKEN_URI = "https://auth-testing.iduruguay.gub.uy/oidc/v1/token";
@@ -36,6 +44,10 @@ public class IduyController {
     private final RestTemplate restTemplate = new RestTemplate();
 
 
+
+    @Autowired
+    private UsuarioController usuarioController;
+
     @GetMapping("/login")
     public RedirectView login() {
         return new RedirectView(AUTHORIZATION_URI + "?client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&scope=" + SCOPE + "&response_type=code");
@@ -43,7 +55,7 @@ public class IduyController {
 
     @SuppressWarnings("unchecked")
     @GetMapping("/")
-    public Map<String, Object> handleCallback(@RequestParam("code") String code) {
+    public Map<String, String> handleCallback(@RequestParam("code") String code) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", AUTHORIZATION_GRANT_TYPE);
         body.add("code", code);
@@ -60,17 +72,37 @@ public class IduyController {
         Map<String, Object> json_salida = response.getBody();
 
 
-
+        String refresh_token = (String) json_salida.get("refresh_token");
         String id_token = (String) json_salida.get("id_token");
         String access_token = (String) json_salida.get("access_token");
 
 
         Map<String, Object> user_info = fetchUserInfo(access_token);
 
-        user_info.put("id_token", id_token);
 
-        return user_info;
+        String nickname = (String) user_info.get("nickname");
+        String name = (String) user_info.get("name");
+        String email = (String) user_info.get("email");
 
+        Usuario usuario = usuarioController.obtenerUsuarioGubuy(nickname);
+        
+
+        Map<String, String> responseMessage = new HashMap<>();
+        
+        if (usuario == null) {
+            // Crear un nuevo usuario si no existe
+            usuario = new Usuario(name, email, "user", nickname, id_token, refresh_token);
+            usuarioController.guardarUsuario(usuario); 
+            responseMessage.put("mensaje", "Usuario registrado e inicio de sesión exitoso");
+        }else{    
+            // Actualizar los tokens si el usuario ya existe
+            usuario.setId_token(id_token);
+            usuario.setRefresh_token(refresh_token);
+            usuarioController.guardarUsuario(usuario); 
+            responseMessage.put("mensaje", "Inicio de sesión exitoso");
+        }
+
+        return responseMessage;
     }
 
 

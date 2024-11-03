@@ -11,6 +11,7 @@ public class Usuario {
     private Long id;
     private String fullName;
     private String email;
+    private String password;
     private String role;
     @Column(name = "gubuy_cedula")
     private String cedula;
@@ -94,4 +95,14 @@ public class Usuario {
     public void setRefresh_token(String refresh_token) {
         this.refresh_token = refresh_token;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
 }

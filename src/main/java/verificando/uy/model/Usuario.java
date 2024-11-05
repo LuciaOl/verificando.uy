@@ -11,6 +11,7 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long id;
     private String fullName;
+    @Column(unique = true)
     private String email;
 
     // Para ignorar en las responses 

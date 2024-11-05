@@ -1,5 +1,6 @@
 package verificando.uy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +12,11 @@ public class Usuario {
     private Long id;
     private String fullName;
     private String email;
+
+    // Para ignorar en las responses 
+    @JsonIgnore
     private String password;
+    
     private String role;
     @Column(name = "gubuy_cedula")
     private String cedula;

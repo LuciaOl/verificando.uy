@@ -9,4 +9,5 @@ import verificando.uy.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, String> {
     // Aquí puedes agregar métodos personalizados si es necesario
     Usuario findByEmail(String email); // Ejemplo de un método personalizado
+    Usuario findByCedula(String cedula);
 }

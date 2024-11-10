@@ -70,30 +70,33 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioGuardado, HttpStatus.CREATED);
    }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUsuario(@RequestBody DtLoginRequest loginRequest) {
-        // Buscar el usuario por email
-        Usuario usuario = usuarioService.obtenerUsuarioPorEmail(loginRequest.getEmail());
-        
-        if (usuario == null) {
-            return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
-        }
-        
-        // Verificar la contraseña
-        boolean isPasswordMatch = utils.verifyPassword(loginRequest.getPassword(), usuario.getPassword());
-        
-        if (!isPasswordMatch) {
-            return new ResponseEntity<>("Contraseña incorrecta.", HttpStatus.UNAUTHORIZED);
-        }
-        
-        DtUsuario usuarioDTO = new DtUsuario(
-            usuario.getid(),
-            usuario.getFullName(),
-            usuario.getEmail()
-        );
-        
-        DtLoginResponse response = new DtLoginResponse("Login exitoso.", usuarioDTO);
-        
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+   @PostMapping("/login")
+   public ResponseEntity<?> loginUsuario(@RequestBody DtLoginRequest loginRequest) {
+       Usuario usuario = usuarioService.obtenerUsuarioPorEmail(loginRequest.getEmail());
+       
+       if (usuario == null) {
+           return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
+       }
+   
+       if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
+           return new ResponseEntity<>("El usuario no tiene una contraseña configurada.", HttpStatus.FORBIDDEN);
+       }
+       
+       boolean isPasswordMatch = utils.verifyPassword(loginRequest.getPassword(), usuario.getPassword());
+       
+       if (!isPasswordMatch) {
+           return new ResponseEntity<>("Contraseña incorrecta.", HttpStatus.UNAUTHORIZED);
+       }
+       
+       DtUsuario usuarioDTO = new DtUsuario(
+           usuario.getid(),
+           usuario.getFullName(),
+           usuario.getEmail()
+       );
+       
+       DtLoginResponse response = new DtLoginResponse("Login exitoso.", usuarioDTO);
+       
+       return new ResponseEntity<>(response, HttpStatus.OK);
+   }
+   
 }

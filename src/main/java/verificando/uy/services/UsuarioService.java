@@ -71,4 +71,23 @@ public class UsuarioService {
     public boolean emailRegistrado(String email) {
         return usuarioRepository.findByEmail(email) != null;
     }
+
+    public boolean tieneContrasena(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        return usuario != null && usuario.getPassword() != null && !usuario.getPassword().isEmpty();
+    }
+
+
+    public Usuario actualizarUsuarioSiNoTieneContrasena(String cedula, Usuario usuarioActualizado) {
+        String cedulaFormato = "uy-ci-" + cedula;
+        Usuario usuarioPorCedula = usuarioRepository.findByCedula(cedulaFormato);
+    
+        // Verificar si el usuario existe y no tiene contraseña establecida
+        if (usuarioPorCedula != null && (usuarioPorCedula.getPassword() == null || usuarioPorCedula.getPassword().isEmpty())) {
+            return actualizarUsuario_Cedula(cedula, usuarioActualizado);
+        } else {
+            throw new RuntimeException("El usuario ya tiene una contraseña establecida o no fue encontrado.");
+        }
+    }
+    
 }

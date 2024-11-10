@@ -1,0 +1,154 @@
+{
+    "info": {
+        "name": "UsuarioController Test Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Obtener Usuario por C\u00e9dula",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/usuarios/usuarios/{{cedula}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "usuarios",
+                        "usuarios",
+                        "{{cedula}}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "cedula",
+                            "value": "12345678"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Guardar Usuario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"fullName\": \"Juan Perez\", \"email\": \"juan@example.com\", \"role\": \"user\", \"cedula\": \"12345678\", \"id_token\": \"sample_id_token\", \"refresh_token\": \"sample_refresh_token\"}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/usuarios/guardar",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "usuarios",
+                        "guardar"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Tokens",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/usuarios/actualizar-tokens/{{cedula}}?id_token={{id_token}}&refresh_token={{refresh_token}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "usuarios",
+                        "actualizar-tokens",
+                        "{{cedula}}"
+                    ],
+                    "query": [
+                        {
+                            "key": "id_token",
+                            "value": "new_id_token"
+                        },
+                        {
+                            "key": "refresh_token",
+                            "value": "new_refresh_token"
+                        }
+                    ],
+                    "variable": [
+                        {
+                            "key": "cedula",
+                            "value": "12345678"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registro de Usuario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"nombre\": \"Maria Lopez\", \"email\": \"maria@example.com\", \"password\": \"password123\"}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/usuarios/registro",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "usuarios",
+                        "registro"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Login de Usuario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"email\": \"maria@example.com\", \"password\": \"password123\"}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/usuarios/login",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "usuarios",
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

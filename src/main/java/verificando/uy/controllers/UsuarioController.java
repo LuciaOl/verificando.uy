@@ -52,16 +52,22 @@ public class UsuarioController {
 
    @PostMapping("/registro")
    public ResponseEntity<Usuario> crearUsuarioConAtributos(@RequestBody DtCrearUsuarioRequest crearUsuarioRequest) {
-       Usuario usuario = new Usuario();
-       usuario.setFullName(crearUsuarioRequest.getNombre());
-       usuario.setEmail(crearUsuarioRequest.getEmail());
 
-       // Hashear la contraseña antes de asignarla
-       String hashedPassword = utils.hashPassword(crearUsuarioRequest.getPassword());
-       usuario.setPassword(hashedPassword);
+        if (usuarioService.emailRegistrado(crearUsuarioRequest.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body(null); 
+        }
+        Usuario usuario = new Usuario();
+        usuario.setFullName(crearUsuarioRequest.getNombre());
+        usuario.setEmail(crearUsuarioRequest.getEmail());
+        usuario.setRole("Citizen");
 
-       Usuario usuarioGuardado = usuarioService.crearUsuario(usuario);
-       return new ResponseEntity<>(usuarioGuardado, HttpStatus.CREATED);
+        // Hashear la contraseña antes de asignarla
+        String hashedPassword = utils.hashPassword(crearUsuarioRequest.getPassword());
+        usuario.setPassword(hashedPassword);
+
+        Usuario usuarioGuardado = usuarioService.crearUsuario(usuario);
+        return new ResponseEntity<>(usuarioGuardado, HttpStatus.CREATED);
    }
 
     @PostMapping("/login")

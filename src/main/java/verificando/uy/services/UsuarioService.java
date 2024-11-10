@@ -67,4 +67,8 @@ public class UsuarioService {
     public Usuario crearUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+
+    public boolean emailRegistrado(String email) {
+        return usuarioRepository.findByEmail(email) != null;
+    }
 }

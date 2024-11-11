@@ -10,18 +10,18 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                    "raw": "{{base_url}}/usuarios/usuarios/{{cedula}}",
+                    "raw": "{{base_url}}/usuarios/usuarios/{{gubuy_cedula}}",
                     "host": [
                         "{{base_url}}"
                     ],
                     "path": [
                         "usuarios",
                         "usuarios",
-                        "{{cedula}}"
+                        "{{gubuy_cedula}}"
                     ],
                     "variable": [
                         {
-                            "key": "cedula",
+                            "key": "gubuy_cedula",
                             "value": "12345678"
                         }
                     ]
@@ -67,14 +67,14 @@
                     }
                 ],
                 "url": {
-                    "raw": "{{base_url}}/usuarios/actualizar-tokens/{{cedula}}?id_token={{id_token}}&refresh_token={{refresh_token}}",
+                    "raw": "{{base_url}}/usuarios/actualizar-tokens/{{gubuy_cedula}}?id_token={{id_token}}&refresh_token={{refresh_token}}",
                     "host": [
                         "{{base_url}}"
                     ],
                     "path": [
                         "usuarios",
                         "actualizar-tokens",
-                        "{{cedula}}"
+                        "{{gubuy_cedula}}"
                     ],
                     "query": [
                         {
@@ -88,7 +88,7 @@
                     ],
                     "variable": [
                         {
-                            "key": "cedula",
+                            "key": "gubuy_cedula",
                             "value": "12345678"
                         }
                     ]

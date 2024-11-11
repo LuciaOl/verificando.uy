@@ -7,23 +7,41 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import verificando.uy.utils.Utils;
+
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController extends UsuarioController {
 
     private final UsuarioService usuarioService;
+    private Utils utils;
+
 
     @Autowired
-    public AdminController(UsuarioService usuarioService) {
+    public AdminController(UsuarioService usuarioService, Utils utils) {
         this.usuarioService = usuarioService;
+        this.utils = utils;
+
     }
 
-    // Método para que el admin cree un nuevo usuario
     @PostMapping("/crear-usuario")
-    public Usuario crearUsuario(@RequestBody Usuario usuario) {
-        // Lógica para que el admin cree un nuevo usuario
+    public Usuario crearUsuario(@RequestParam String nombre, @RequestParam String email, @RequestParam String role) {
+        Usuario usuario = new Usuario();
+        usuario.setFullName(nombre);
+        usuario.setEmail(email);
+        usuario.setRole(role);
+    
+        String defaultPassword = "defaultPassword123";
+        usuario.setPassword(utils.hashPassword(defaultPassword));
+    
+        usuario.setCedula(null);
+        usuario.setId_token(null);
+        usuario.setRefresh_token(null);
+    
         return usuarioService.crearUsuario(usuario);
     }
+    
 
     // Método para modificar el rol de un usuario
     @PutMapping("/modificar-rol")

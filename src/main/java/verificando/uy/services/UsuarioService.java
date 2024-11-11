@@ -6,6 +6,8 @@ import verificando.uy.model.Usuario;
 import verificando.uy.repositories.UsuarioRepository;
 
 import java.util.Optional;
+import verificando.uy.utils.Utils;
+
 
 
 // Si un usuario no tiene password es porque solo tiene login con iduy
@@ -14,10 +16,26 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+        private Utils utils;
+    
+        @Autowired
+        public UsuarioService(UsuarioRepository usuarioRepository, Utils utils) {
+            this.usuarioRepository = usuarioRepository;
+            this.utils = utils;
+    }
 
-    @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public void crearAdminPorDefecto() {
+        String emailAdmin = "admin@example.com";
+        if (!emailRegistrado(emailAdmin)) {
+            Usuario admin = new Usuario();
+            admin.setFullName("Admin");
+            admin.setEmail(emailAdmin);
+            admin.setPassword(utils.hashPassword("admin")); 
+            admin.setRole("Admin"); // Define el rol como Admin
+
+            usuarioRepository.save(admin);
+            System.out.println("Usuario admin creado con email: " + emailAdmin);
+        }
     }
 
     public Usuario obtenerUsuarioPorId(Long id) {
@@ -88,6 +106,17 @@ public class UsuarioService {
         } else {
             throw new RuntimeException("El usuario ya tiene una contraseña establecida o no fue encontrado.");
         }
+    }
+
+    public Usuario modificarRolUsuario(String email, String nuevoRol) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado con el email proporcionado.");
+        }
+        
+        usuario.setRole(nuevoRol);
+        return usuarioRepository.save(usuario);
     }
     
 }

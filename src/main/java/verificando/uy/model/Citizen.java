@@ -67,4 +67,12 @@ public class Citizen extends Usuario {
     public void setTockenDispositivo(String tockenDispositivo) {
         this.tockenDispositivo = tockenDispositivo;
     }
+
+    public void subscribeToHecho(Hecho hecho) {
+        this.subscriptions.add(hecho);
+    }
+
+    public void unsubscribeFromHecho(Hecho hecho) {
+        this.subscriptions.remove(hecho);
+    }
 }

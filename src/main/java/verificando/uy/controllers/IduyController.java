@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
-
+import verificando.uy.enums.Role;
 import verificando.uy.model.Usuario;
 
 import java.util.HashMap;
@@ -21,14 +21,9 @@ import java.util.Map;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
 @RestController
 @RequestMapping("/")
 public class IduyController {
-
-  
-
-
 
     private static final String AUTHORIZATION_URI = "https://auth-testing.iduruguay.gub.uy/oidc/v1/authorize";
     private static final String TOKEN_URI = "https://auth-testing.iduruguay.gub.uy/oidc/v1/token";
@@ -42,8 +37,6 @@ public class IduyController {
     private static final String SCOPE = "openid profile email";
 
     private final RestTemplate restTemplate = new RestTemplate();
-
-
 
     @Autowired
     private UsuarioController usuarioController;
@@ -71,14 +64,11 @@ public class IduyController {
 
         Map<String, Object> json_salida = response.getBody();
 
-
         String refresh_token = (String) json_salida.get("refresh_token");
         String id_token = (String) json_salida.get("id_token");
         String access_token = (String) json_salida.get("access_token");
 
-
         Map<String, Object> user_info = fetchUserInfo(access_token);
-
 
         String nickname = (String) user_info.get("nickname");
         String name = (String) user_info.get("name");
@@ -86,15 +76,14 @@ public class IduyController {
 
         Usuario usuario = usuarioController.obtenerUsuarioGubuy(nickname);
         
-
         Map<String, String> responseMessage = new HashMap<>();
         
         if (usuario == null) {
             // Crear un nuevo usuario si no existe
-            usuario = new Usuario(name, email, "user", nickname, id_token, refresh_token);
+            usuario = new Usuario(name, email, Role.CITIZEN, nickname, id_token, refresh_token);
             usuarioController.guardarUsuario(usuario); 
             responseMessage.put("mensaje", "Usuario registrado e inicio de sesión exitoso");
-        }else{    
+        } else {    
             // Actualizar los tokens si el usuario ya existe
             usuario.setId_token(id_token);
             usuario.setRefresh_token(refresh_token);
@@ -104,8 +93,6 @@ public class IduyController {
 
         return responseMessage;
     }
-
-
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> fetchUserInfo(String access_token) {
@@ -130,8 +117,6 @@ public class IduyController {
         }
     }
 
-
-    // Cerrar sesión
     @GetMapping("/logout")
     public ResponseEntity<String> logout(@RequestParam("id_token") String idToken) {
         String logoutUrl = LOGOUT_URI + "?id_token_hint=" + idToken;

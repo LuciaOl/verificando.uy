@@ -32,7 +32,7 @@ public class AdminController extends UsuarioController {
         Usuario usuario = new Usuario();
         usuario.setFullName(nombre);
         usuario.setEmail(email);
-        usuario.setRole(role.name()); 
+        usuario.setRole(role);  // Asignar role directamente como un enum
         
         String defaultPassword = "defaultPassword123";
         usuario.setPassword(utils.hashPassword(defaultPassword));
@@ -48,7 +48,7 @@ public class AdminController extends UsuarioController {
     @PutMapping("/modificar-rol")
     public ResponseEntity<String> modificarRolUsuario(@RequestParam String email, @RequestParam Role nuevoRol) {
         try {
-            usuarioService.modificarRolUsuario(email, nuevoRol.name());
+            usuarioService.modificarRolUsuario(email, nuevoRol);  // Usar el enum directamente
             return ResponseEntity.status(HttpStatus.OK).body("Rol del usuario modificado exitosamente.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

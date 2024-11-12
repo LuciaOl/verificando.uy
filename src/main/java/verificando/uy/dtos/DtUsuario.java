@@ -1,16 +1,19 @@
 package verificando.uy.dtos;
 
+import verificando.uy.enums.Role;
+
 public class DtUsuario {
     private Long id;
     private String fullName;
     private String email;
+    private Role role;
 
-    public DtUsuario(Long id, String fullName, String email) {
+    public DtUsuario(Long id, String fullName, String email, Role role) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
+        this.role = role;
     }
-
 
     public Long getId() {
         return id;
@@ -34,5 +37,13 @@ public class DtUsuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -98,7 +98,8 @@ public class UsuarioController {
        DtUsuario usuarioDTO = new DtUsuario(
            usuario.getid(),
            usuario.getFullName(),
-           usuario.getEmail()
+           usuario.getEmail(),
+           usuario.getRole()
        );
        
        DtLoginResponse response = new DtLoginResponse("Login exitoso.", usuarioDTO);
@@ -116,7 +117,7 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
 
         List<DtUsuario> dtUsuarios = usuarios.stream()
-            .map(usuario -> new DtUsuario(usuario.getid(), usuario.getFullName(), usuario.getEmail()))
+            .map(usuario -> new DtUsuario(usuario.getid(), usuario.getFullName(), usuario.getEmail(),usuario.getRole()))
             .collect(Collectors.toList());
 
         try {

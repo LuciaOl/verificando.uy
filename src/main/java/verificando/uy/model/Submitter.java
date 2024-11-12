@@ -3,6 +3,7 @@ package verificando.uy.model;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import verificando.uy.enums.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Submitter extends Usuario {
     private List<String> submittedFacts;
 
     // Constructor
-    public Submitter(String fullName, String email, String role, String organizationName) {
+    public Submitter(String fullName, String email, Role role, String organizationName) {
         super(fullName, email, role);
         this.organizationName = organizationName;
         this.submittedFacts = new ArrayList<>();

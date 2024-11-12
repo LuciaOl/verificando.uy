@@ -2,55 +2,56 @@ package verificando.uy.controllers;
 
 import verificando.uy.model.Usuario;
 import verificando.uy.services.UsuarioService;
+import verificando.uy.enums.Role;
+import verificando.uy.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import verificando.uy.utils.Utils;
-
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController extends UsuarioController {
 
     private final UsuarioService usuarioService;
-    private Utils utils;
-
+    private final Utils utils;
 
     @Autowired
     public AdminController(UsuarioService usuarioService, Utils utils) {
         this.usuarioService = usuarioService;
         this.utils = utils;
-
     }
 
     @PostMapping("/crear-usuario")
-    public Usuario crearUsuario(@RequestParam String nombre, @RequestParam String email, @RequestParam String role) {
+    public ResponseEntity<String> crearUsuario(@RequestParam String nombre, @RequestParam String email, @RequestParam Role role) {
+        
+        if (usuarioService.emailRegistrado(email)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("El email ya está registrado.");
+        }
+        
         Usuario usuario = new Usuario();
         usuario.setFullName(nombre);
         usuario.setEmail(email);
-        usuario.setRole(role);
-    
+        usuario.setRole(role);  // Asignar role directamente como un enum
+        
         String defaultPassword = "defaultPassword123";
         usuario.setPassword(utils.hashPassword(defaultPassword));
-    
+        
         usuario.setCedula(null);
         usuario.setId_token(null);
         usuario.setRefresh_token(null);
-    
-        return usuarioService.crearUsuario(usuario);
+        
+        usuarioService.crearUsuario(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado exitosamente.");
     }
-    
 
-    // Método para modificar el rol de un usuario
     @PutMapping("/modificar-rol")
-    public ResponseEntity<?> modificarRolUsuario(@RequestParam String email, @RequestParam String nuevoRol) {
+    public ResponseEntity<String> modificarRolUsuario(@RequestParam String email, @RequestParam Role nuevoRol) {
         try {
-            Usuario usuarioActualizado = usuarioService.modificarRolUsuario(email, nuevoRol);
-            return new ResponseEntity<>(usuarioActualizado, HttpStatus.OK);
+            usuarioService.modificarRolUsuario(email, nuevoRol);  // Usar el enum directamente
+            return ResponseEntity.status(HttpStatus.OK).body("Rol del usuario modificado exitosamente.");
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

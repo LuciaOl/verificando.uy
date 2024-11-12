@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import verificando.uy.enums.Role;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Citizen extends Usuario {
     private List<Hecho> subscriptions;
 
     // Constructor
-    public Citizen(String fullName, String email, String role) {
+    public Citizen(String fullName, String email, Role role) {
         super(fullName, email, role);
         this.searchHistory = new ArrayList<>();
         this.suggestions = new ArrayList<>();

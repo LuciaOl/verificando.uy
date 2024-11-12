@@ -1,0 +1,78 @@
+{
+    "info": {
+        "name": "AdminController Test Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Crear Usuario",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/admin/crear-usuario?nombre={{nombre}}&email={{email}}&role={{role}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "admin",
+                        "crear-usuario"
+                    ],
+                    "query": [
+                        {
+                            "key": "nombre",
+                            "value": "Juan Perez"
+                        },
+                        {
+                            "key": "email",
+                            "value": "juan.perez@example.com"
+                        },
+                        {
+                            "key": "role",
+                            "value": "Admin"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Modificar Rol de Usuario",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/admin/modificar-rol?email={{email}}&nuevoRol={{nuevoRol}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "admin",
+                        "modificar-rol"
+                    ],
+                    "query": [
+                        {
+                            "key": "email",
+                            "value": "juan.perez@example.com"
+                        },
+                        {
+                            "key": "nuevoRol",
+                            "value": "User"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

@@ -5,9 +5,14 @@ import org.springframework.stereotype.Repository;
 import verificando.uy.model.Usuario;
 
 
+import java.util.List;
+
+
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, String> {
-    // Aquí puedes agregar métodos personalizados si es necesario
-    Usuario findByEmail(String email); // Ejemplo de un método personalizado
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario findByEmail(String email);
     Usuario findByCedula(String cedula);
+    
+    // Método para buscar usuarios por su rol
+    List<Usuario> findByRole(String role);
 }

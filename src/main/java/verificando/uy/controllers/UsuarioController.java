@@ -52,42 +52,51 @@ public class UsuarioController {
 
    @PostMapping("/registro")
    public ResponseEntity<Usuario> crearUsuarioConAtributos(@RequestBody DtCrearUsuarioRequest crearUsuarioRequest) {
-       Usuario usuario = new Usuario();
-       usuario.setFullName(crearUsuarioRequest.getNombre());
-       usuario.setEmail(crearUsuarioRequest.getEmail());
 
-       // Hashear la contraseña antes de asignarla
-       String hashedPassword = utils.hashPassword(crearUsuarioRequest.getPassword());
-       usuario.setPassword(hashedPassword);
+        if (usuarioService.emailRegistrado(crearUsuarioRequest.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body(null); 
+        }
+        Usuario usuario = new Usuario();
+        usuario.setFullName(crearUsuarioRequest.getNombre());
+        usuario.setEmail(crearUsuarioRequest.getEmail());
+        usuario.setRole("Citizen");
 
-       Usuario usuarioGuardado = usuarioService.crearUsuario(usuario);
-       return new ResponseEntity<>(usuarioGuardado, HttpStatus.CREATED);
+        // Hashear la contraseña antes de asignarla
+        String hashedPassword = utils.hashPassword(crearUsuarioRequest.getPassword());
+        usuario.setPassword(hashedPassword);
+
+        Usuario usuarioGuardado = usuarioService.crearUsuario(usuario);
+        return new ResponseEntity<>(usuarioGuardado, HttpStatus.CREATED);
    }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUsuario(@RequestBody DtLoginRequest loginRequest) {
-        // Buscar el usuario por email
-        Usuario usuario = usuarioService.obtenerUsuarioPorEmail(loginRequest.getEmail());
-        
-        if (usuario == null) {
-            return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
-        }
-        
-        // Verificar la contraseña
-        boolean isPasswordMatch = utils.verifyPassword(loginRequest.getPassword(), usuario.getPassword());
-        
-        if (!isPasswordMatch) {
-            return new ResponseEntity<>("Contraseña incorrecta.", HttpStatus.UNAUTHORIZED);
-        }
-        
-        DtUsuario usuarioDTO = new DtUsuario(
-            usuario.getid(),
-            usuario.getFullName(),
-            usuario.getEmail()
-        );
-        
-        DtLoginResponse response = new DtLoginResponse("Login exitoso.", usuarioDTO);
-        
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+   @PostMapping("/login")
+   public ResponseEntity<?> loginUsuario(@RequestBody DtLoginRequest loginRequest) {
+       Usuario usuario = usuarioService.obtenerUsuarioPorEmail(loginRequest.getEmail());
+       
+       if (usuario == null) {
+           return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
+       }
+   
+       if (usuario.getPassword() == null || usuario.getPassword().isEmpty()) {
+           return new ResponseEntity<>("El usuario no tiene una contraseña configurada.", HttpStatus.FORBIDDEN);
+       }
+       
+       boolean isPasswordMatch = utils.verifyPassword(loginRequest.getPassword(), usuario.getPassword());
+       
+       if (!isPasswordMatch) {
+           return new ResponseEntity<>("Contraseña incorrecta.", HttpStatus.UNAUTHORIZED);
+       }
+       
+       DtUsuario usuarioDTO = new DtUsuario(
+           usuario.getid(),
+           usuario.getFullName(),
+           usuario.getEmail()
+       );
+       
+       DtLoginResponse response = new DtLoginResponse("Login exitoso.", usuarioDTO);
+       
+       return new ResponseEntity<>(response, HttpStatus.OK);
+   }
+   
 }

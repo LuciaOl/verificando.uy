@@ -5,7 +5,7 @@
     },
     "item": [
         {
-            "name": "Obtener Usuario por C\u00e9dula",
+            "name": "Obtener Usuario por Cédula",
             "request": {
                 "method": "GET",
                 "header": [],
@@ -41,7 +41,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\"fullName\": \"Juan Perez\", \"email\": \"juan@example.com\", \"role\": \"user\", \"cedula\": \"12345678\", \"id_token\": \"sample_id_token\", \"refresh_token\": \"sample_refresh_token\"}"
+                    "raw": "{\"fullName\": \"Juan Perez\", \"email\": \"juan@example.com\", \"role\": \"CITIZEN\", \"cedula\": \"12345678\", \"id_token\": \"sample_id_token\", \"refresh_token\": \"sample_refresh_token\"}"
                 },
                 "url": {
                     "raw": "{{base_url}}/usuarios/guardar",

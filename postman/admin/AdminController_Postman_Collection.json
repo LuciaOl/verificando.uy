@@ -34,7 +34,7 @@
                         },
                         {
                             "key": "role",
-                            "value": "Admin"
+                            "value": "ADMIN"
                         }
                     ]
                 }
@@ -67,7 +67,101 @@
                         },
                         {
                             "key": "nuevoRol",
-                            "value": "User"
+                            "value": "CITIZEN"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Obtener Usuario por ID",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/admin/usuarios/{{id}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "admin",
+                        "usuarios",
+                        "{{id}}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Usuario",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/admin/actualizar-usuario/{{id}}?nombre={{nombre}}&email={{email}}&role={{role}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "admin",
+                        "actualizar-usuario",
+                        "{{id}}"
+                    ],
+                    "query": [
+                        {
+                            "key": "nombre",
+                            "value": "Carlos Gomez"
+                        },
+                        {
+                            "key": "email",
+                            "value": "carlos.gomez@example.com"
+                        },
+                        {
+                            "key": "role",
+                            "value": "SUBMITTER"
+                        }
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar Usuario",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/admin/eliminar-usuario/{{id}}",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "admin",
+                        "eliminar-usuario",
+                        "{{id}}"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "1"
                         }
                     ]
                 }

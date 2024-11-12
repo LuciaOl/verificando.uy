@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import verificando.uy.model.Usuario;
 import verificando.uy.repositories.UsuarioRepository;
 
+import java.util.List;
 import java.util.Optional;
 import verificando.uy.utils.Utils;
 
@@ -31,7 +32,7 @@ public class UsuarioService {
             admin.setFullName("Admin");
             admin.setEmail(emailAdmin);
             admin.setPassword(utils.hashPassword("admin")); 
-            admin.setRole("Admin"); // Define el rol como Admin
+            admin.setRole("Admin"); 
 
             usuarioRepository.save(admin);
             System.out.println("Usuario admin creado con email: " + emailAdmin);
@@ -41,6 +42,20 @@ public class UsuarioService {
     public Usuario obtenerUsuarioPorId(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
+    
+    public void actualizarUsuario(Long id, Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+    
+    public boolean eliminarUsuario(Long id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+    
+
 
     public Usuario obtenerUsuarioPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
@@ -78,9 +93,7 @@ public class UsuarioService {
         }
     }
 
-    public void eliminarUsuario(Long id) {
-        usuarioRepository.deleteById(id);
-    }
+
 
     public Usuario crearUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
@@ -118,5 +131,11 @@ public class UsuarioService {
         usuario.setRole(nuevoRol);
         return usuarioRepository.save(usuario);
     }
+
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        return usuarioRepository.findAll();
+    }
+    
+
     
 }

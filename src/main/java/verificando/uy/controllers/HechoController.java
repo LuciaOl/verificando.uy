@@ -5,16 +5,20 @@ import verificando.uy.dtos.DtVerificacion;
 import verificando.uy.model.Citizen;
 import verificando.uy.model.Hecho;
 import org.springframework.web.bind.annotation.*;
+import verificando.uy.model.PeripheralNode;
 import verificando.uy.services.CitizenService;
 import verificando.uy.services.HechoService;
 import verificando.uy.services.NotificationService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/hechos")
 public class HechoController {
+    private Hecho hechoParaVerificar;
+
 
     private final HechoService hechoService;
 
@@ -58,5 +62,22 @@ public class HechoController {
             notificationService.enviarNotificacionPush(suscriptor, hechoVerificado.get());
         });
         return hechoVerificado.orElse(null); // Retorna null si no se encuentra el hecho
+    }
+
+    @GetMapping("/enProceso")
+    public Optional<List<Hecho>> obtenerHechosEnProceso(){
+        Optional<List<Hecho>> hechos = hechoService.obtenerTodosLosHechos();
+
+        return hechos.map(listaHechos ->
+                listaHechos.stream()
+                        .filter(hecho -> "Pendiente".equals(hecho.getStatus()))
+                        .collect(Collectors.toList()));
+    }
+
+    @PutMapping("/verificar/{factID}")
+    public Hecho seleccionarHechoParaVerificar(@PathVariable Long factID){
+        this.hechoParaVerificar = obtenerHecho(factID);
+
+        return this.hechoParaVerificar;
     }
 }

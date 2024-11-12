@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import verificando.uy.model.Hecho;
 import verificando.uy.repositories.HechoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static verificando.uy.enums.Status.VERIFICADO;
@@ -62,5 +63,9 @@ public class HechoService {
             hechoRepository.save(hecho);
             return Optional.of(hecho);
         }
+    }
+
+    public Optional<List<Hecho>> obtenerTodosLosHechos(){
+        return Optional.of(hechoRepository.findAll());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import verificando.uy.services.PeripheralNodeService;
 
+import java.util.List;
 
 
 @RestController
@@ -34,5 +35,10 @@ public class PeripheralNodeController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @GetMapping("/obtenerNodos")
+    public List<PeripheralNode> obtenerNodos() {
+        return peripheralNodeService.obtenerNodos();
     }
 }

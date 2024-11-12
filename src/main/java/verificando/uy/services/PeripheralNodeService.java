@@ -10,6 +10,7 @@ import verificando.uy.repositories.PeripheralNodeRepository;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,5 +64,9 @@ public class PeripheralNodeService {
         } else {
             throw new Exception("Nodo periférico no encontrado.");
         }
+    }
+
+    public List<PeripheralNode> obtenerNodos(){
+        return peripheralNodeRepository.findAll();
     }
 }

@@ -1,4 +1,6 @@
 package verificando.uy.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,6 +11,7 @@ public class Verificacion {
     private Long id; // Identificador de la verificación
     @ManyToOne
     @JoinColumn(name = "id_hecho")
+    @JsonBackReference // Define el lado "inverso" de la relación
     private Hecho hecho;
     private boolean esVerdadero; // Resultado de la verificación
     private String justificacion; // Justificación del verificador

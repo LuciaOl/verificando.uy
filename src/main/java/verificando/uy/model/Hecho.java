@@ -1,5 +1,6 @@
 package verificando.uy.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import verificando.uy.enums.Status;
 import jakarta.persistence.*;
 
@@ -30,6 +31,7 @@ public class Hecho {
     private List<String> justifications;
 
     @OneToMany(mappedBy = "hecho", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // Define el lado "gestor" de la relación
     private List<Verificacion> verificacions;
 
 

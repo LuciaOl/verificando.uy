@@ -3,7 +3,7 @@ package verificando.uy.model;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import verificando.uy.model.Usuario;
+import verificando.uy.enums.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class Checker extends Usuario {
     private List<String> factsHistory;
 
     // Constructor
-    public Checker(String fullName, String email, String role) {
+    public Checker(String fullName, String email, Role role) {
         super(fullName, email, role);
         this.assignedFacts = new ArrayList<>();
         this.factsHistory = new ArrayList<>();

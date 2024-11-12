@@ -38,7 +38,7 @@ public class UsuarioController {
 
     @PostMapping("/guardar")
     public Usuario guardarUsuario(@RequestBody Usuario usuario) {
-        if (usuario.getRole() == null || Role.valueOf(usuario.getRole()) == null) {
+        if (usuario.getRole() == null) {
             throw new RuntimeException("Rol no válido para el usuario");
         }
         return usuarioService.crearUsuario(usuario); 
@@ -61,7 +61,6 @@ public class UsuarioController {
 
    @PostMapping("/registro")
    public ResponseEntity<String> crearUsuarioConAtributos(@RequestBody DtCrearUsuarioRequest crearUsuarioRequest) {
-   
        if (usuarioService.emailRegistrado(crearUsuarioRequest.getEmail())) {
            return ResponseEntity.status(HttpStatus.CONFLICT).body("El email ya está registrado.");
        }
@@ -69,7 +68,7 @@ public class UsuarioController {
        Usuario usuario = new Usuario();
        usuario.setFullName(crearUsuarioRequest.getNombre());
        usuario.setEmail(crearUsuarioRequest.getEmail());
-       usuario.setRole(Role.CITIZEN.name());
+       usuario.setRole(Role.CITIZEN);  // Asignar el rol directamente como Role.CITIZEN
    
        String hashedPassword = utils.hashPassword(crearUsuarioRequest.getPassword());
        usuario.setPassword(hashedPassword);
@@ -128,7 +127,6 @@ public class UsuarioController {
         }
     }
 
-    
     // Leer Usuario (Read)
     @GetMapping("/{id}")
     public ResponseEntity<String> obtenerUsuario(@PathVariable Long id) {
@@ -151,7 +149,7 @@ public class UsuarioController {
 
         usuario.setFullName(nombre);
         usuario.setEmail(email);
-        usuario.setRole(role.name());
+        usuario.setRole(role);  // Asignar role directamente como un enum
         usuarioService.actualizarUsuario(id, usuario);
 
         return ResponseEntity.status(HttpStatus.OK).body("Usuario actualizado exitosamente.");
@@ -170,7 +168,7 @@ public class UsuarioController {
     @PutMapping("/modificar-rol")
     public ResponseEntity<String> modificarRolUsuario(@RequestParam String email, @RequestParam Role nuevoRol) {
         try {
-            usuarioService.modificarRolUsuario(email, nuevoRol.name());
+            usuarioService.modificarRolUsuario(email, nuevoRol);
             return ResponseEntity.status(HttpStatus.OK).body("Rol del usuario modificado exitosamente.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

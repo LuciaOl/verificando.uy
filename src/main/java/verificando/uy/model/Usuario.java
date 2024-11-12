@@ -2,6 +2,7 @@ package verificando.uy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import verificando.uy.enums.Role;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -11,32 +12,35 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long id;
     private String fullName;
+
     @Column(unique = true)
     private String email;
 
-    // Para ignorar en las responses 
     @JsonIgnore
     private String password;
     
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Column(name = "gubuy_cedula")
     private String cedula;
-    @Column(name = "gubuy_id_token", length = 1024)    
-    private String id_token;
-    @Column(name = "gubuy_refresh_token", length = 1024)   
-    private String refresh_token;
 
+    @Column(name = "gubuy_id_token", length = 1024)
+    private String id_token;
+
+    @Column(name = "gubuy_refresh_token", length = 1024)
+    private String refresh_token;
 
     // Constructor
     public Usuario() {}
 
-    public Usuario(String fullName, String email, String role) {
+    public Usuario(String fullName, String email, Role role) {
         this.fullName = fullName;
         this.email = email;
         this.role = role;
     }
 
-    public Usuario(String fullName, String email, String role, String cedula, String id_token, String refresh_token) {
+    public Usuario(String fullName, String email, Role role, String cedula, String id_token, String refresh_token) {
         this.fullName = fullName;
         this.email = email;
         this.role = role;
@@ -58,10 +62,6 @@ public class Usuario {
         return fullName;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -74,12 +74,16 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getCedula() {
+        return cedula;
     }
 
     public void setCedula(String cedula) {
@@ -110,5 +114,8 @@ public class Usuario {
         this.password = password;
     }
 
-    
+    public void setRole(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRole'");
+    }
 }

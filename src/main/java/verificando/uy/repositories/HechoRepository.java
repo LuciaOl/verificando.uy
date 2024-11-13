@@ -3,6 +3,7 @@ package verificando.uy.repositories;
 import verificando.uy.model.Hecho;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,20 +16,20 @@ public interface HechoRepository extends JpaRepository<Hecho, Long>  {
 
     
     ///REPORTES
-    @Query("SELECT h.categoria, COUNT(h) FROM Hecho h WHERE h.fechaCreacion BETWEEN :desde AND :hasta GROUP BY h.categoria ORDER BY COUNT(h) DESC")
-    List<Object[]> getTopCategoriasConHechos(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
+    @Query("SELECT h.category, COUNT(h) FROM Hecho h WHERE h.fechaCreacion BETWEEN :desde AND :hasta GROUP BY h.category ORDER BY COUNT(h) DESC")
+    List<Object[]> getTopCategorysDeHechos(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
     
-    @Query("SELECT h.id, h.titulo FROM Hecho h WHERE h.categoria = :categoria AND h.fechaCreacion BETWEEN :desde AND :hasta")
-    List<Object[]> getHechosPorCategoria(@Param("categoria") String categoria, @Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
-    
-    
+    @Query("SELECT h.id, h.titulo FROM Hecho h WHERE h.category = :category AND h.fechaCreacion BETWEEN :desde AND :hasta")
+    List<Object[]> getHechosPorCategory(@Param("category") String category, @Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
     
     
-    @Query("SELECT h.categoria, COUNT(h), h.id, h.titulo " +
+    
+    
+    @Query("SELECT h.category, COUNT(h), h.id, h.titulo " +
     	       "FROM Hecho h WHERE h.fechaCreacion BETWEEN :desde AND :hasta " +
-    	       "GROUP BY h.categoria " +
+    	       "GROUP BY h.category " +
     	       "ORDER BY COUNT(h) DESC")
-    	List<Object[]> getCategoriasConHechosYCantidad(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
+    	List<Object[]> getCategorysConHechosYCantidad(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
     ///REPORTES
 
 

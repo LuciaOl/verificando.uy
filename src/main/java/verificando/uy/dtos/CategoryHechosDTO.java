@@ -2,7 +2,7 @@ package verificando.uy.dtos;
 
 import java.util.List;
 
-public class CategoriaHechosDTO {
+public class CategoryHechosDTO {
     private String nombreCategoria;
     private int cantidadHechos;
     private List<HechoDTO> hechos;

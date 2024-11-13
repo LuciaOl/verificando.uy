@@ -4,7 +4,7 @@ import java.util.List;
 
 public class HechosVerificadosResponseDTO {
     private int cantidadHechos;
-    private List<CategoriaHechosDTO> categorias;
+    private List<CategoryHechosDTO> categorias;
 
     // Getters y setters
     public int getCantidadHechos() {
@@ -15,11 +15,11 @@ public class HechosVerificadosResponseDTO {
         this.cantidadHechos = cantidadHechos;
     }
 
-    public List<CategoriaHechosDTO> getCategorias() {
+    public List<CategoryHechosDTO> getCategorias() {
         return categorias;
     }
 
-    public void setCategorias(List<CategoriaHechosDTO> categorias) {
+    public void setCategorias(List<CategoryHechosDTO> categorias) {
         this.categorias = categorias;
     }
 }

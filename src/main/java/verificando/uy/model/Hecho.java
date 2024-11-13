@@ -17,7 +17,7 @@ import static verificando.uy.enums.Status.PENDIENTE;
 public class Hecho {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_hecho")
+    @Column(name = "hecho_id")
     private Long id;
     private LocalDateTime fechaCreacion;
     private String description;
@@ -51,13 +51,14 @@ public class Hecho {
     }
 
     // Getters y Setters
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 
-    public void setid(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
     
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;

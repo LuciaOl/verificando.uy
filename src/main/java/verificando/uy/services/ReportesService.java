@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import verificando.uy.repositories.HechoRepository;
 import verificando.uy.dtos.HechosVerificadosResponseDTO;
 import verificando.uy.dtos.CategoryHechosDTO;
-import verificando.uy.dtos.CategoryHechosDTO.HechoDTO;  // Importa HechoDTO directamente
-
+import verificando.uy.dtos.CategoryHechosDTO.HechoDTO;
+import verificando.uy.model.Hecho;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -26,20 +26,16 @@ public class ReportesService {
     }
 
     public List<CategoryHechosDTO> getTopCategorysDeHechos(LocalDateTime desde, LocalDateTime hasta) {
-        // Obtenemos los resultados de la consulta del repository
         List<Object[]> categorysData = hechoRepository.getCategorysConHechosYCantidad(desde, hasta);
 
-        // Mapa para agrupar los hechos por category
         Map<String, CategoryHechosDTO> categorysMap = new HashMap<>();
 
-        // Procesamos los resultados de la consulta
         for (Object[] obj : categorysData) {
-            String category = (String) obj[0];  // Nombre de la category
-            Long idHecho = (Long) obj[2];        // ID del hecho
-            String tituloHecho = (String) obj[3]; // Titulo del hecho
-            int cantidadHechos = ((Long) obj[1]).intValue();  // Cantidad de hechos por category
+            String category = (String) obj[0];
+            Long idHecho = (Long) obj[2];
+            String tituloHecho = (String) obj[3];
+            int cantidadHechos = ((Long) obj[1]).intValue();
 
-            // Si la category no existe en el mapa, la creamos
             CategoryHechosDTO categoryDTO = categorysMap.get(category);
             if (categoryDTO == null) {
                 categoryDTO = new CategoryHechosDTO();
@@ -49,16 +45,14 @@ public class ReportesService {
                 categorysMap.put(category, categoryDTO);
             }
 
-            // Anadimos el hecho a la category
-            CategoryHechosDTO.HechoDTO hechoDTO = new CategoryHechosDTO.HechoDTO();  // Crear un HechoDTO desde la clase interna
+            HechoDTO hechoDTO = new HechoDTO();
             hechoDTO.setId(idHecho);
             hechoDTO.setTitulo(tituloHecho);
             categoryDTO.getHechos().add(hechoDTO);
         }
 
-        // Convertimos el mapa en una lista y la ordenamos por la cantidad de hechos
         List<CategoryHechosDTO> categorys = new ArrayList<>(categorysMap.values());
-        categorys.sort(Comparator.comparingInt(CategoryHechosDTO::getCantidadHechos).reversed());  // Ordenamos por cantidad de hechos
+        categorys.sort(Comparator.comparingInt(CategoryHechosDTO::getCantidadHechos).reversed());
 
         return categorys;
     }
@@ -69,28 +63,24 @@ public class ReportesService {
         int cantidadHechos = 0;
         List<CategoryHechosDTO> categorys = new ArrayList<>();
 
-        // Procesamos la respuesta de la consulta y agrupamos los hechos por category
         for (Object[] obj : topcategorys) {
             String category = (String) obj[0];
-            int cantidadcategory = ((Long) obj[1]).intValue();  // Convertimos el conteo de hechos a int
+            int cantidadcategory = ((Long) obj[1]).intValue();
 
-            // Incrementamos el total de hechos
             cantidadHechos += cantidadcategory;
 
-            // Obtenemos los hechos de esta category (limitar a 3)
-            List<Object[]> hechosDecategory = hechoRepository.getHechosPorCategory(category, desde, hasta);
+            // Update this part to retrieve List<Hecho> instead of List<Object>
+            List<Hecho> hechosDecategory = hechoRepository.getHechosPorCategory(category, desde, hasta);
 
-            // Limitar a 3 hechos
-            List<CategoryHechosDTO.HechoDTO> hechosDTO = new ArrayList<>();  // Usamos directamente HechoDTO
+            List<HechoDTO> hechosDTO = new ArrayList<>();
             for (int i = 0; i < Math.min(3, hechosDecategory.size()); i++) {
-                Object[] hecho = hechosDecategory.get(i);
-                CategoryHechosDTO.HechoDTO hechoDTO = new CategoryHechosDTO.HechoDTO();  // Crear un HechoDTO desde la clase interna
-                hechoDTO.setId((Long) hecho[0]);
-                hechoDTO.setTitulo((String) hecho[1]);
+                Hecho hecho = hechosDecategory.get(i);
+                HechoDTO hechoDTO = new HechoDTO();
+                hechoDTO.setId(hecho.getId());
+                hechoDTO.setTitulo(hecho.getDescription());// TODO: juan lo cambia
                 hechosDTO.add(hechoDTO);
             }
 
-            // Crear el DTO de category con los hechos obtenidos
             CategoryHechosDTO categoryDTO = new CategoryHechosDTO();
             categoryDTO.setNombreCategoria(category);
             categoryDTO.setHechos(hechosDTO);
@@ -98,12 +88,11 @@ public class ReportesService {
             categorys.add(categoryDTO);
         }
 
-        // Limitar la cantidad de categorys a 3
+        // Limitar la cantidad de categorías a 3
         categorys = categorys.stream()
-                               .limit(3)  // Solo traemos las primeras 3 categorys
-                               .collect(Collectors.toList());
+                .limit(3)
+                .collect(Collectors.toList());
 
-        // Crear y devolver el DTO final
         HechosVerificadosResponseDTO response = new HechosVerificadosResponseDTO();
         response.setCantidadHechos(cantidadHechos);
         response.setCategorias(categorys);

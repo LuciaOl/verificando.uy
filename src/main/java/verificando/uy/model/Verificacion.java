@@ -8,7 +8,7 @@ public class Verificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Identificador de la verificación
     @ManyToOne
-    @JoinColumn(name = "id_hecho")
+    @JoinColumn(name = "hecho_id", nullable = false)
     private Hecho hecho;
     private boolean esVerdadero; // Resultado de la verificación
     private String justificacion; // Justificación del verificador

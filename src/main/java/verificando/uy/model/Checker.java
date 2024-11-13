@@ -1,8 +1,6 @@
 package verificando.uy.model;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import verificando.uy.enums.Role;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +12,10 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Checker extends Usuario {
 
-    @ElementCollection // Anotación para listas de tipos básicos (String)
-    private List<String> assignedFacts;
+    @OneToMany(mappedBy = "assignedChecker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Hecho> assignedFacts = new ArrayList<>();
 
-    @ElementCollection // También es necesaria aquí
+    @ElementCollection
     private List<String> factsHistory;
 
     // Constructor
@@ -30,11 +28,12 @@ public class Checker extends Usuario {
     public Checker() {}
 
     // Getters y setters
-    public List<String> getAssignedFacts() {
+
+    public List<Hecho> getAssignedFacts() {
         return assignedFacts;
     }
 
-    public void setAssignedFacts(List<String> assignedFacts) {
+    public void setAssignedFacts(List<Hecho> assignedFacts) {
         this.assignedFacts = assignedFacts;
     }
 
@@ -44,6 +43,9 @@ public class Checker extends Usuario {
 
     public void setFactsHistory(List<String> factsHistory) {
         this.factsHistory = factsHistory;
+    }
+    public void addFact(Hecho hecho) {
+        assignedFacts.add(hecho);
     }
 }
 

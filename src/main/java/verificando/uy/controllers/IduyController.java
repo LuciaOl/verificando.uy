@@ -33,7 +33,7 @@ public class IduyController {
     private static final String CLIENT_ID = "890192";
     private static final String CLIENT_SECRET = "457d52f181bf11804a3365b49ae4d29a2e03bbabe74997a2f510b179";
     private static final String AUTHORIZATION_GRANT_TYPE = "authorization_code";
-    private static final String REDIRECT_URI = "http://localhost:8080";
+    private static final String REDIRECT_URI = "http://localhost:3000";
     private static final String SCOPE = "openid profile email";
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -80,10 +80,12 @@ public class IduyController {
         
         if (usuario == null) {
             // Crear un nuevo usuario si no existe
+            System.out.println(usuario);
             usuario = new Usuario(name, email, Role.CITIZEN, nickname, id_token, refresh_token);
             usuarioController.guardarUsuario(usuario); 
             responseMessage.put("mensaje", "Usuario registrado e inicio de sesión exitoso");
         } else {    
+            System.out.println(usuario);
             // Actualizar los tokens si el usuario ya existe
             usuario.setId_token(id_token);
             usuario.setRefresh_token(refresh_token);

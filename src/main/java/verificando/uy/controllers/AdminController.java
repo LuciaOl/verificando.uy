@@ -2,6 +2,7 @@ package verificando.uy.controllers;
 
 import verificando.uy.model.Usuario;
 import verificando.uy.services.UsuarioService;
+import verificando.uy.dtos.DonationConfigDTO;
 import verificando.uy.enums.Role;
 import verificando.uy.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -18,12 +18,10 @@ public interface HechoRepository extends JpaRepository<Hecho, Long>  {
     ///REPORTES
     @Query("SELECT h.category, COUNT(h) FROM Hecho h WHERE h.fechaCreacion BETWEEN :desde AND :hasta GROUP BY h.category ORDER BY COUNT(h) DESC")
     List<Object[]> getTopCategorysDeHechos(@Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
-
-    @Query("SELECT h FROM Hecho h WHERE h.category = :category AND h.timestamp BETWEEN :startDate AND :endDate")
-    List<Hecho> getHechosPorCategory(@Param("category") String category,
-                                     @Param("startDate") LocalDateTime startDate,
-                                     @Param("endDate") LocalDateTime endDate);
-
+    
+    @Query("SELECT h.id, h.titulo FROM Hecho h WHERE h.category = :category AND h.fechaCreacion BETWEEN :desde AND :hasta")
+    List<Object[]> getHechosPorCategory(@Param("category") String category, @Param("desde") LocalDateTime desde, @Param("hasta") LocalDateTime hasta);
+    
     
     
     

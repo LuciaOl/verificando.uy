@@ -1,19 +1,21 @@
 package verificando.uy.services;
 
-import verificando.uy.dtos.PeripheralNodeRequest;
-import verificando.uy.model.PeripheralNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import verificando.uy.dtos.PeripheralNodeRequest;
+import verificando.uy.model.PeripheralNode;
 import verificando.uy.repositories.PeripheralNodeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PeripheralNodeService {
+    private static final Logger log = LoggerFactory.getLogger(PeripheralNodeService.class);
 
     private final PeripheralNodeRepository peripheralNodeRepository;
 
@@ -22,46 +24,33 @@ public class PeripheralNodeService {
         this.peripheralNodeRepository = peripheralNodeRepository;
     }
 
-    // Método para validar conectividad
-    private boolean validarConectividad(String url) {
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-            int code = connection.getResponseCode();
-            return (code >= 200 && code < 300); // Conectividad exitosa si el código de respuesta es 2xx
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    // Método para crear un nodo periférico
     public PeripheralNode crearNodoPeriferico(PeripheralNodeRequest request) throws Exception {
         if (peripheralNodeRepository.findByUrl(request.getUrl()).isPresent()) {
             throw new Exception("El nodo periférico ya está registrado.");
         }
 
-        // Validar conectividad
-        if (!validarConectividad(request.getUrl())) {
-            throw new Exception("Error de conectividad al nodo periférico.");
-        }
-
-        // Crear y guardar el nodo periférico
         PeripheralNode node = new PeripheralNode();
+        node.setId(java.util.UUID.randomUUID().toString());
         node.setName(request.getName());
         node.setUrl(request.getUrl());
         node.setVerificationType(request.getVerificationType());
-        node.setActive(true); // Queda activo si la validación es exitosa
+        node.setActive(true);
 
         return peripheralNodeRepository.save(node);
     }
-    // Método para obtener un nodo periférico por ID
-    public PeripheralNode obtenerNodoPerifericoPorId(Long id) throws Exception {
-        Optional<PeripheralNode> nodo = peripheralNodeRepository.findById(id);
-        if (nodo.isPresent()) {
-            return nodo.get();
-        } else {
-            throw new Exception("Nodo periférico no encontrado.");
+
+    public PeripheralNode obtenerNodoPerifericoPorId(String id) throws Exception {
+        return peripheralNodeRepository.findById(id)
+                .orElseThrow(() -> new Exception("Nodo periférico no encontrado."));
+    }
+
+    public List<PeripheralNode> listarTodos() throws IOException {
+        try {
+            return peripheralNodeRepository.findAll();
+        } catch (IOException e) {
+            log.error("Error fetching peripheral nodes: ", e);
+            throw e;
         }
     }
+
 }

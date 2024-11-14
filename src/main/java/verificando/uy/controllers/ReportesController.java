@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import verificando.uy.services.ReportesService;
 
-import verificando.uy.dtos.HechosVerificadosResponseDTO;
-import verificando.uy.dtos.CategoryHechosDTO;
+import verificando.uy.dtos.DtReporte;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,7 +20,7 @@ public class ReportesController {
     }
 
     @GetMapping("/getHechosVerificadosEntreFechas")
-    public HechosVerificadosResponseDTO getHechosVerificadosEntreFechas(
+    public DtReporte getHechosVerificadosEntreFechas(
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta) {
 
@@ -29,7 +28,7 @@ public class ReportesController {
     }
 
     @GetMapping("/getTopCategoriasDeHechos")
-    public List<CategoryHechosDTO> getTopCategoriasDeHechos(
+    public DtReporte getTopCategoriasDeHechos(
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta) {
 

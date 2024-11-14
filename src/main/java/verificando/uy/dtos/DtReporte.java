@@ -2,9 +2,9 @@ package verificando.uy.dtos;
 
 import java.util.List;
 
-public class HechosVerificadosResponseDTO {
+public class DtReporte {
     private int cantidadHechos;
-    private List<CategoryHechosDTO> categorias;
+    private List<DtSubReporte> categorias;
 
     // Getters y setters
     public int getCantidadHechos() {
@@ -15,11 +15,11 @@ public class HechosVerificadosResponseDTO {
         this.cantidadHechos = cantidadHechos;
     }
 
-    public List<CategoryHechosDTO> getCategorias() {
+    public List<DtSubReporte> getCategorias() {
         return categorias;
     }
 
-    public void setCategorias(List<CategoryHechosDTO> categorias) {
+    public void setCategorias(List<DtSubReporte> categorias) {
         this.categorias = categorias;
     }
 }

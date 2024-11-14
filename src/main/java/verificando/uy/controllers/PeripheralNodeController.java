@@ -36,7 +36,7 @@ public class PeripheralNodeController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/GetAll")
     public List<PeripheralNode> listarTodosLosNodos() {
         try {
             return peripheralNodeService.listarTodos();

@@ -29,6 +29,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("com.google.firebase:firebase-admin:8.0.1")
 	implementation ("org.apache.httpcomponents.client5:httpclient5:5.2.1")
+	implementation ("org.slf4j:slf4j-api:2.0.0")  // o la última versión estable
+
+	// Logback (backend para SLF4J)
+	implementation ("ch.qos.logback:logback-classic:1.4.6") // o la última versión estable
+
 
 	runtimeOnly("com.mysql:mysql-connector-j")
 

@@ -28,6 +28,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-couchbase")
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("com.google.firebase:firebase-admin:8.0.1")
+	implementation ("org.apache.httpcomponents.client5:httpclient5:5.2.1")
+
 	runtimeOnly("com.mysql:mysql-connector-j")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -36,6 +38,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
 	testImplementation("org.junit.jupiter:junit-jupiter-engine")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	
 }
 
 

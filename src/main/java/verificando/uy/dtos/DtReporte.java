@@ -1,17 +1,25 @@
 package verificando.uy.dtos;
 
-import verificando.uy.enums.Status;
+import java.util.List;
 
-import java.time.LocalDateTime;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+public class HechosVerificadosResponseDTO {
+    private int cantidadHechos;
+    private List<CategoryHechosDTO> categorias;
 
-@Builder
-@Getter
-@Setter
+    // Getters y setters
+    public int getCantidadHechos() {
+        return cantidadHechos;
+    }
 
-public class DtReporte {
-    private LocalDateTime fechaDesde;
-    private LocalDateTime fechaHasta;
+    public void setCantidadHechos(int cantidadHechos) {
+        this.cantidadHechos = cantidadHechos;
+    }
+
+    public List<CategoryHechosDTO> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<CategoryHechosDTO> categorias) {
+        this.categorias = categorias;
+    }
 }

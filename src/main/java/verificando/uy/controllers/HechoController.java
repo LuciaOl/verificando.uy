@@ -75,9 +75,7 @@ public class HechoController {
     }
 
     @PutMapping("/verificar/{factID}")
-    public Hecho seleccionarHechoParaVerificar(@PathVariable Long factID){
+    public void seleccionarHechoParaVerificar(@PathVariable Long factID){
         this.hechoParaVerificar = obtenerHecho(factID);
-
-        return this.hechoParaVerificar;
     }
 }
